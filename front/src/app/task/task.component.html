@@ -1,0 +1,111 @@
+<section class="row mt-5">
+
+  <!--add operation section-->
+  <section class="col-12">
+    <h4 class="text-center display-4 mt-5">Task Manager</h4>
+
+    <!--form-->
+    <div class="d-flex flex-row justify-content-between ml-5 mr-5">
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>New Task Title</mat-label>
+          <input matInput placeholder="Ex. Go to shop" [(ngModel)]="taskTitle" [ngModelOptions]="{standalone: true}"
+                 required class="" value="">
+        </mat-form-field>
+        <button class="btn btn-info" (click)="saveTask()">Add task</button>
+
+      </form>
+    </div>
+  </section>
+
+  <!--not completed task section-->
+  <section class="col-6 flex-column ">
+    <div class="row">
+      <div class="col-12 d-flex flex-row align-content-center align-items-center">
+        <h2 class="font-weight-bolder ml-5 mt-4 mr-5">Not Completed</h2>
+        <img src="https://img.icons8.com/cotton/64/000000/failed-task--v1.png"/>      </div>
+    </div>
+
+    <!--task list-->
+    <div class="m-5" *ngFor="let task of tasks">
+      <div class="card mb-3" *ngIf="task.completed==0">
+        <div class="card-header">
+          <h5 class="card-title">This task created {{task.created_at | date:'medium'}}</h5>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"> {{task.title}}</h5>
+
+          <form class="example-form" *ngIf="updateTaskId==task.id">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="updatedTaskTitle" [value]="updatedTaskTitle" [ngModelOptions]="{standalone: true}"
+                     matInput placeholder="Enter new title">
+            </mat-form-field>
+          </form>
+
+
+          <button mat-stroked-button *ngIf="updateTaskId==task.id" (click)="updateTaskTitle(task.id)" class="mr-2">
+            Update Task
+          </button>
+          <button mat-stroked-button *ngIf="updateTaskId==task.id" (click)="closeUpdatePanel(task.id)" class="mr-2">
+            Colse
+          </button>
+
+          <button *ngIf="updateTaskId!==task.id" mat-stroked-button color="primary" class="mr-2"
+                  (click)="editTask(task.id,task.title)">Edit Task
+          </button>
+          <a mat-flat-button color="warn" (click)="deleteTask(task.id)">Delete</a>
+          <button mat-mini-fab (click)="completeTask(task.id)" color="accent"
+                  aria-label="Example icon button with a delete icon" matTooltip="Mark as Completed" class="ml-2">
+            <mat-icon>thumb_up</mat-icon>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!--completed task section-->
+  <section class="col-6  flex-column">
+    <div class="row">
+      <div class="col-12 d-flex flex-row">
+        <h2 class="font-weight-bolder ml-5 mt-4 mr-5">Completed Tasks</h2>
+        <img src="https://img.icons8.com/cotton/64/000000/successfully-completed-task--v1.png"/>
+      </div>
+    </div>
+
+
+    <!--task list-->
+    <div class="m-5" *ngFor="let task of tasks">
+      <div class="card mb-3" *ngIf="task.completed==1">
+        <div class="card-header bg-success">
+          <h5 class="card-title">This task created {{task.created_at | date:'medium'}}</h5>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"> {{task.title}}</h5>
+
+          <form class="example-form" *ngIf="updateTaskId==task.id">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="updatedTaskTitle" [value]="updatedTaskTitle" [ngModelOptions]="{standalone: true}"
+                     matInput placeholder="Enter new title">
+            </mat-form-field>
+          </form>
+
+
+          <button mat-stroked-button *ngIf="updateTaskId==task.id" (click)="updateTaskTitle(task.id)" class="mr-2">
+            Update Task
+          </button>
+          <button mat-stroked-button *ngIf="updateTaskId==task.id" (click)="closeUpdatePanel(task.id)" class="mr-2">
+            Colse
+          </button>
+
+          <button *ngIf="updateTaskId!==task.id" mat-stroked-button color="primary" class="mr-2"
+                  (click)="editTask(task.id,task.title)">Edit Task
+          </button>
+
+          <a mat-flat-button color="warn" (click)="deleteTask(task.id)">Delete</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</section>
